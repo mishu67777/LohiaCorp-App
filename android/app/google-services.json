@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "731972045707",
+    "project_id": "lohia-553a0",
+    "storage_bucket": "lohia-553a0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:731972045707:android:453194816331a364d53d8e",
+        "android_client_info": {
+          "package_name": "com.lohiacorp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "731972045707-ol5rf962a1mn9uphffsojubrgct764mm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.lohiacorp",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "731972045707-t3irg7acckl1ssiqp7houi60c4fdicar.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.lohiacorp",
+            "certificate_hash": "a31599e31af8d5158083cdce1951c67deba4a159"
+          }
+        },
+        {
+          "client_id": "731972045707-i7rv2qessjcoda81giijeq2rjn57lsec.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDp3kH21eKa7x36UxxoIeWLDB3wNQTaM0g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "731972045707-i7rv2qessjcoda81giijeq2rjn57lsec.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
