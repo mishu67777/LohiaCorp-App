@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
-import { View, Text, StyleSheet, TouchableOpacity, Dimensions, Image, Modal, Pressable } from 'react-native';
+import { View, Platform, SafeAreaView ,Text, StyleSheet, TouchableOpacity, Dimensions, Image, Modal, Pressable } from 'react-native';
 import Header from '../../Components/Header'; // Adjust the path as needed
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 import { getApi } from '../../Service/Api';
@@ -90,6 +90,11 @@ const HomeScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
     </TouchableOpacity>
   );
 
+  const ViewDetails = (item) =>{
+    setIsModalVisible(false)
+    navigation.navigate("Details",{data:item})
+    }
+
   const renderModalItem = ({ item }: any) => (
     <View style={styles.modalSlide}>
       <Image
@@ -101,14 +106,14 @@ const HomeScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
             <Text style={styles.modalDescription} numberOfLines={3}>
               {item?.description}
             </Text>
-            <Pressable style={styles.modalButton} onPress={()=>navigation.navigate("Details",{data:item})}>
+            <Pressable style={styles.modalButton} onPress={()=>ViewDetails(item)}>
               <Text style={styles.modalButtonText}>VIEW DETAIL</Text>
             </Pressable>
     </View>
   );
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Header navigation={navigation} />
       <View style={styles.topSection}>
         <Carousel
@@ -142,7 +147,7 @@ const HomeScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
         </TouchableOpacity>
         <Text style={styles.optionText}>Production Planning</Text>
 
-        <TouchableOpacity style={styles.optionContainer} onPress={() => navigation.push("NewProject")}>
+        <TouchableOpacity style={styles.optionContainer} onPress={() => navigation.navigate("NewProject")}>
           <Image source={require('../../assets/LohiaCorp_NewProject.png')} style={styles.iconImage} />
         </TouchableOpacity>
 
@@ -188,7 +193,7 @@ const HomeScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
           </View>
         </View>
       </Modal>
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -243,10 +248,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: height * 0.05,
-    shadowColor: '#000',
-    shadowRadius: 4,
+    shadowColor: Platform.OS=='android'?'#000':'#FFF',
+    shadowRadius: Platform.OS=='android'?4:1,
     shadowOffset: { width: 2, height: 4 },
-    shadowOpacity: 0.8,
+    shadowOpacity: Platform.OS=='android'?0.8:0.1,
     borderColor: '#E0E0E0',
   },
   iconImage: {

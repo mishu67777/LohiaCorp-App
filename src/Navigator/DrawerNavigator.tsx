@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { createDrawerNavigator, DrawerContentComponentProps, DrawerItem } from '@react-navigation/drawer';
-import { SafeAreaView, StyleSheet, Text, View, Image, Linking, TouchableOpacity } from 'react-native';
+import {ActivityIndicator, Alert, SafeAreaView, StyleSheet, Text, View, Image, Linking, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { useFocusEffect } from '@react-navigation/native';
@@ -17,6 +17,7 @@ import { useNavigation } from '@react-navigation/native';
 import LoomList from '../Screen/ProductPlanning/LoomList';
 import { getApi } from '../Service/Api';
 import Config from '../Utils/Config';
+// import 
 
 const Drawer = createDrawerNavigator();
 
@@ -89,6 +90,8 @@ const CustomDrawerContent: React.FC<DrawerContentComponentProps> = (props) => {
     image: 'https://via.placeholder.com/80',
     userDetails: null,
   });
+
+  const [isLoading, setIsLoading] = useState(false);
   const navigation = useNavigation();
 
   
@@ -129,6 +132,14 @@ const CustomDrawerContent: React.FC<DrawerContentComponentProps> = (props) => {
     } catch (error) {
       console.error('Error removing token:', error);
     }
+  };
+
+  const handleAccountDeletion = async () => { setIsLoading(true); 
+    setTimeout(async () => { setIsLoading(false); 
+      Alert.alert('Account Deleted', 'Your account has been successfully deleted.'); 
+      await AsyncStorage.removeItem('mean-token'); 
+      navigation.navigate('Login'); 
+    }, 3000); 
   };
 
   const handleEdit = () => {
@@ -183,11 +194,32 @@ const CustomDrawerContent: React.FC<DrawerContentComponentProps> = (props) => {
         icon={({ color }) => <Icon name="book" size={20} color={color} />}
         onPress={() => Linking.openURL('http://www.lohiagroup.com/product')}
       />
+
+      <DrawerItem 
+        label="Delete Account" 
+        icon={({ color }) => <MaterialIcons 
+        name="delete" size={20} 
+        color={color} />} 
+        onPress={handleAccountDeletion} />
+
       <DrawerItem
         label="Log Out"
         icon={({ color }) => <MaterialIcons name="logout" size={20} color={color} />}
         onPress={() => handleLogout()}
       />
+
+      
+        {
+        isLoading && 
+          ( 
+            <View style={styles.loader}> 
+                <ActivityIndicator size="large" color="#0000ff" /> 
+                <Text>Deleting Account...</Text> 
+            </View> 
+          )
+        }
+
+
     </SafeAreaView>
   );
 };

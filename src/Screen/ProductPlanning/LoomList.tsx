@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
+import { View, SafeAreaView, Text, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
 import Header from '../../Components/Header'; 
 import Ionicons from 'react-native-vector-icons/Ionicons'; 
 import { useFocusEffect } from '@react-navigation/native';
@@ -45,7 +45,7 @@ const LoomList: React.FC<ProductListProps> = ({ navigation,route }) => {
   );
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Header title={route?.params?.title} navigation={navigation} />
       <View style={styles.contentContainer}>
         <Text style={styles.title}>Production & Process Calculator</Text>
@@ -57,7 +57,7 @@ const LoomList: React.FC<ProductListProps> = ({ navigation,route }) => {
           showsVerticalScrollIndicator={true} // Enable scroll
         />
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

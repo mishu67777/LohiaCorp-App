@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, Dimensions, Linking } from 'react-native';
+import { View, SafeAreaView, Text, StyleSheet, ScrollView, Dimensions, Linking } from 'react-native';
 import Header from '../Components/Header'; 
 import { aboutUsAndBenefits } from '../Service/Api';
 import Config from '../Utils/Config';
@@ -25,7 +25,7 @@ const Benefits: React.FC = ({ navigation }) => {
   }, []);
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Header navigation={navigation} />
 
       <ScrollView contentContainerStyle={styles.contentContainer}>
@@ -38,7 +38,7 @@ const Benefits: React.FC = ({ navigation }) => {
           tagsStyles={tagsStyles}
         />
       </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 };
 

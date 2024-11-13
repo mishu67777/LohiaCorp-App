@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, ScrollView, Dimensions } from 'react-native';
+import { View, SafeAreaView, Text, StyleSheet, Image, ScrollView, Dimensions } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import Header from '../../Components/Header';
 const {height,width} = Dimensions.get('window')
@@ -11,7 +11,7 @@ const DetailScreen: React.FC<DetailsScreenProps> = ({ navigation, route }) => {
   const { description, image, title } = route?.params?.data;
 
   return (
-    <ScrollView style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Header navigation={navigation} />
       <Text style={styles.title}>{title}</Text>
       <View style={styles.contentContainer}>
@@ -21,7 +21,7 @@ const DetailScreen: React.FC<DetailsScreenProps> = ({ navigation, route }) => {
           {description}
         </Text>
       </View>
-    </ScrollView>
+    </SafeAreaView>
   );
 };
 

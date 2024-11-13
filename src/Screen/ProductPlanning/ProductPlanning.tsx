@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Dimensions, Image } from 'react-native';
+import { View, Platform, SafeAreaView, Text, StyleSheet, TouchableOpacity, Dimensions, Image } from 'react-native';
 import Header from '../../Components/Header'; // Adjust the path as needed
 import { data } from '../../Components/data';
 
@@ -26,7 +26,7 @@ const ProductPlanning: React.FC = ({ navigation }) => {
   const entries1 = getFirstEntry1(data["production planning"]);
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Header title={"Production Planning"} navigation={navigation}/>
       <View style={styles.contentContainer}>
         
@@ -44,7 +44,7 @@ const ProductPlanning: React.FC = ({ navigation }) => {
 
         <Text style={styles.optionText}>Loom Operations</Text>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -99,10 +99,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: height * 0.05,
-    shadowColor: '#000',
-    shadowRadius: 4,
+    shadowColor: Platform.OS=='android'?'#000':'#FFF',
+    shadowRadius: Platform.OS=='android'?4:1,
     shadowOffset: { width: 2, height: 4 },
-    shadowOpacity: 0.8,
+    shadowOpacity: Platform.OS=='android'?0.8:0.1,
     borderColor: '#E0E0E0',
   },
   iconImage: {

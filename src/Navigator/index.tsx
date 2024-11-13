@@ -53,7 +53,7 @@ function RootNavigation() {
         console.log('navigator token data will be', token);
 
        
-        setInitialRoute(token ? 'Home' : 'Login');
+        setInitialRoute(token ? 'Home' : 'IntroSlider');
 
        
         setTimeout(() => {
@@ -61,7 +61,7 @@ function RootNavigation() {
         }, 1000);
       } catch (error) {
         console.error('Error fetching token:', error);
-        setInitialRoute('Login'); 
+        setInitialRoute('IntroSlider'); 
       }
     };
 

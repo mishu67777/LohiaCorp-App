@@ -2,7 +2,7 @@
 
 
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
+import { View, SafeAreaView, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import Header from '../../Components/Header';
 import { useRoute } from '@react-navigation/native';
 import MathView from 'react-native-math-view';
@@ -270,7 +270,7 @@ const calculator = (grade: string, value: any) => {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Header title="Tape Line Operations" navigation={navigation} />
 
       <Text style={styles.title}>{route?.params?.name?.name} Formula</Text>
@@ -309,7 +309,7 @@ const calculator = (grade: string, value: any) => {
       {result !== null && (
         <Text style={styles.resultText}>{route?.params?.name?.name} = {result.toFixed(2)} {route?.params?.name?.unit}</Text>
       )}
-    </View>
+    </SafeAreaView>
   );
 };
 

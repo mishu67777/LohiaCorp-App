@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>731972045707-pcrhi8v754khlj5otgv1e5qc4kubuenq.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.731972045707-pcrhi8v754khlj5otgv1e5qc4kubuenq</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>731972045707-ol5rf962a1mn9uphffsojubrgct764mm.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCzNjhpLmO7qbO_82f95jsREbNSxtDEboA</string>
+	<key>GCM_SENDER_ID</key>
+	<string>731972045707</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>org.rj.LohiaCorp</string>
+	<key>PROJECT_ID</key>
+	<string>lohia-553a0</string>
+	<key>STORAGE_BUCKET</key>
+	<string>lohia-553a0.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:731972045707:ios:463c21d85de079dfd53d8e</string>
+</dict>
+</plist>

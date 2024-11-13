@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Dimensions } from 'react-native';
+import { View, SafeAreaView, Text, StyleSheet, ScrollView, TouchableOpacity, Dimensions } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons'; 
 import Header from '../Components/Header'; 
 import {getApi} from '../Service/Api';
@@ -34,7 +34,7 @@ const Faq: React.FC = ({ navigation }) => {
   }, []);
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
     
       <Header navigation={navigation} />
 
@@ -60,7 +60,7 @@ const Faq: React.FC = ({ navigation }) => {
           </TouchableOpacity>
         ))}
       </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 };
 

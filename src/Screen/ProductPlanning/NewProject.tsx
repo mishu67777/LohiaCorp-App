@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import {
-  View,
+  View, SafeAreaView, 
   Text,
   StyleSheet,
   TouchableOpacity,
@@ -84,12 +84,12 @@ const NewProject = ({ navigation }) => {
   const handleApplicationSelect = application => {
     setSelectedApplication(application);
     setRangeEnabled(true); 
-    setApplicationModalVisible(false); 
+    // setApplicationModalVisible(false); 
   };
 
   const handleRangeSelect = range => {
     setSelectedRange(range); 
-    setRangeModalVisible(false); 
+    //setRangeModalVisible(false); 
   };
 
   const handleCloseApplicationModal = () => {
@@ -101,42 +101,39 @@ const NewProject = ({ navigation }) => {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.scrollViewContainer}>
-      <View style={styles.container}>
+    // <ScrollView contentContainerStyle={styles.scrollViewContainer}>
+      <SafeAreaView style={styles.container}>
         <Header title="New Project" navigation={navigation} />
         <View style={styles.content}>
           {/* Choose Application Section */}
-          <View style={styles.inputGroup}>
-            <TouchableOpacity
-              style={styles.pickerContainer}
-              onPress={handleApplicationPress}>
+          <TouchableOpacity style={styles.inputGroup} onPress={handleApplicationPress}>
+            <View style={styles.pickerContainer}>
               <Text style={styles.pickerText}>
                 {selectedApplication?.name || 'Choose Application'}
               </Text>
-            </TouchableOpacity>
+              </View>
             <Image
               source={require('../../assets/LohiaCorp_Dropdown.png')}
               style={styles.dropdownIcon}
               resizeMode="contain"
             />
-          </View>
+          </TouchableOpacity>
 
           {/* Select Range Section */}
-          <View style={[styles.inputGroup, !isRangeEnabled && styles.disabled]}>
-            <TouchableOpacity
+          <TouchableOpacity onPress={handleRangePress} style={[styles.inputGroup, !isRangeEnabled && styles.disabled]}>
+            <View
               style={styles.pickerContainer}
-              onPress={handleRangePress}
               disabled={!isRangeEnabled}>
               <Text style={styles.pickerText}>
                 {selectedRange?.range || 'Select sacks per day'}
               </Text>
-            </TouchableOpacity>
+            </View>
             <Image
               source={require('../../assets/LohiaCorp_Dropdown.png')}
               style={styles.dropdownIcon}
               resizeMode="contain"
             />
-          </View>
+          </TouchableOpacity>
 
           <View style={{ justifyContent: 'center', alignItems: 'center' }}>
             <TouchableOpacity style={styles.button} onPress={handleCalculate}>
@@ -312,8 +309,8 @@ const NewProject = ({ navigation }) => {
     </>
           )}
 
-    </View>
-    </ScrollView>
+    </SafeAreaView>
+    // </ScrollView>
   );
 };
 

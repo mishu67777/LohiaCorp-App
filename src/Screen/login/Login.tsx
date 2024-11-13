@@ -8,73 +8,60 @@ import {
   Dimensions,
   TouchableOpacity,
   ScrollView,
+  Platform,
 } from 'react-native';
 import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
-import {googleLogin,getApi} from '../../Service/Api'
-import Config from '../../Utils/Config'
+import { googleLogin, getApi } from '../../Service/Api';
+import Config from '../../Utils/Config';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-const { height, width } = Dimensions.get('window');
 import Toast from 'react-native-toast-message';
+import { appleAuth } from '@invertase/react-native-apple-authentication'; // Apple sign-in library
 
+const { height, width } = Dimensions.get('window');
 
 const Login = ({ navigation }) => {
-  const [showLogo, setShowLogo] = useState(true); 
+  const [showLogo, setShowLogo] = useState(true);
 
-  // Initialize Google Sign-In Configuration
   GoogleSignin.configure({
     webClientId: '731972045707-i7rv2qessjcoda81giijeq2rjn57lsec.apps.googleusercontent.com', // Replace with your Web Client ID from Google Cloud Console
     offlineAccess: true,
   });
 
-  // Handle the scroll event
   const handleScroll = (event) => {
     const scrollPosition = event.nativeEvent.contentOffset.y;
     setShowLogo(scrollPosition < 50);
   };
 
-  const  viewProfile =async()=> {
-    // this.api.profileView().subscribe((data) => {
-    //   localStorage.setItem("userdetails", JSON.stringify(data["user"]));
-    //   this.events.publish("user:details", data["user"]);
-    //   this.router.navigateByUrl("/dashboard");
-    // });
+  const viewProfile = async () => {
     const res = await getApi(Config.Profile);
-    AsyncStorage.setItem("userdetails", JSON.stringify(res["user"]));
-    // alert(JSON.stringify(res))
-    navigation.navigate('Home')
-  }
+    AsyncStorage.setItem('userdetails', JSON.stringify(res['user']));
+    navigation.navigate('Home');
+  };
 
-  const onLoginSuccess=async(accessToken: string, loginType: string)=> {
-  
-   await  googleLogin({ id_token: accessToken, is_login_type: loginType })
-      .then((res) => {
-          
-          console.log('login_user_info', res["access_token"]);
-          
-          AsyncStorage.setItem("mean-token", res["access_token"]);
-          AsyncStorage.setItem("isloggedin", "true");
-          viewProfile();
-        //  alert("Signed in successfully")
-         Toast.show({
-          type: 'success',
-          text1: 'Signed in successfully',
-          position: 'bottom',
-        });
-          
-      })
-      .catch((error) => {
-           
-          console.log('error in callLoginApi', error);
-      })
-  }
+  const onLoginSuccess = async (accessToken, loginType) => {
+    try {
+      const res = await googleLogin({ id_token: accessToken, is_login_type: loginType });
+      console.log('>>>>>onLoginSuccess: ', res);
+      AsyncStorage.setItem('mean-token', res['access_token']);
+      AsyncStorage.setItem('isloggedin', 'true');
+      viewProfile();
+      Toast.show({
+        type: 'success',
+        text1: 'Signed in successfully',
+        position: 'bottom',
+      });
+    } catch (error) {
+      console.log('error in login', error);
+    }
+  };
 
-  
   const handleGoogleSignIn = async () => {
     try {
       await GoogleSignin.hasPlayServices();
       const response = await GoogleSignin.signIn();
-      console.log('User Info:', response);
-      onLoginSuccess(response?.data.idToken, "0");
+      console.log('>>>>>loginresponse: ', response);
+      console.log('>>>>>response?.data?.idToken: ', response?.data?.idToken);
+      onLoginSuccess(response?.data?.idToken, '0'); // Google login type '0'
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
         console.log('User cancelled the login process');
@@ -88,16 +75,46 @@ const Login = ({ navigation }) => {
     }
   };
 
+  const handleAppleSignIn = async () => {
+    try {
+      const appleAuthResponse = await appleAuth.performRequest({
+        requestedOperation: appleAuth.Operation.LOGIN,
+        requestedScopes: [appleAuth.Scope.EMAIL, appleAuth.Scope.FULL_NAME],
+      });
+
+      const credentialState = await appleAuth.getCredentialStateForUser(
+        appleAuthResponse.user,
+      );
+
+      if (credentialState === appleAuth.State.AUTHORIZED) {
+        onLoginSuccess(appleAuthResponse.identityToken, '1'); 
+      }
+    } catch (error) {
+      console.error('Apple Sign-In Error: ', error);
+    }
+  };
+
+  const onLogin = async () => {
+    //navigation.navigate('Home');
+    //return false;
+    if (Platform.OS === 'android') {
+      await handleGoogleSignIn();
+    } else {
+      
+      await handleAppleSignIn();
+    }
+  };
+
   return (
     <ImageBackground
-      source={require('../../assets/backImge.jpg')} 
+      source={require('../../assets/backImge.jpg')}
       style={styles.container}
       resizeMode="cover"
     >
       <ScrollView
         contentContainerStyle={{ flexGrow: 1 }}
         onScroll={handleScroll}
-        scrollEventThrottle={16} 
+        scrollEventThrottle={16}
       >
         <View style={{ flex: 1 }}>
           {showLogo && (
@@ -111,19 +128,21 @@ const Login = ({ navigation }) => {
           <View style={styles.cardWrapper}>
             <View style={styles.cardContainer}>
               <Text style={styles.loginText}>User Login</Text>
+
+             
               <TouchableOpacity
                 style={styles.googleButton}
-                onPress={handleGoogleSignIn}
+                onPress={onLogin}
               >
-                <Text style={styles.googleButtonText}>GOOGLE LOGIN+</Text>
+                <Text style={styles.googleButtonText}>
+                  {Platform.OS === 'android' ? 'GOOGLE LOGIN+' : 'Sign in with Apple'}
+                </Text>
               </TouchableOpacity>
             </View>
           </View>
           <Toast />
         </View>
-        
       </ScrollView>
-     
     </ImageBackground>
   );
 };
@@ -168,7 +187,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   googleButton: {
-    marginTop: '10%',
+     marginTop: '10%',
     height: '30%',
     width: '60%',
     borderRadius: 30,
@@ -184,6 +203,3 @@ const styles = StyleSheet.create({
 });
 
 export default Login;
-
-
-
